@@ -22,22 +22,14 @@ def inicializar_grafica(nombre_archivo):
 
 if __name__ == "__main__":
     G = inicializar_grafica("grafica.txt")
-    print(G.edges.__len__.__sizeof__)
-    # G = nx.Graph()
-    # G.add_node("A")
-    # G.add_node("B")
-    # G.add_node("C")
-    # G.add_node("D")
-    # nx.draw(
-    #     G,
-    #     with_labels=True,
-    #     # node_color="red",
-    #     # font_weight="bold",
-    #     font_family="serif",
-    #     # font_size=20,
-    #     # node_size=2000,
-    # )
+    print(G.number_of_edges("7", "4"))
 
-    nx.draw(G, node_color="r", edge_color="b")
+    nx.draw(
+        G,
+        with_labels=True,
+        font_family="serif",
+        edge_color="b",
+    )
+
     plt.margins(0.1)
     plt.show()
