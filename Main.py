@@ -39,14 +39,43 @@ def agarrar_nodos_al_azar(numero_nodos):
 
 
 def existe_trajectoria(G, u, v, k, nodos_rand_unicos, contador):
+
+    if u in G.neighbors(v) and contador < k:
+        print(u + "->" + v)
+        if nodos_rand_unicos[0] in G.neighbors(u):
+            u = v
+            if (
+                existe_trajectoria(G, u, v, k, nodos_rand_unicos, contador)
+                and contador < k
+            ):
+                return True
+        else:
+            return False
+
     if u == v and contador < k:
+        print("contador " + str(contador))
+        print("hola")
         return True
 
     for neighbor in G.neighbors(u):
+
+        neighbor = str(neighbor)
         if neighbor in nodos_rand_unicos:
             contador += 1
             u = neighbor
-            return existe_trajectoria(G, neighbor, v, k, nodos_rand_unicos, contador)
+            if len(nodos_rand_unicos) > 1:
+                nodos_rand_unicos.remove(neighbor)
+                print(u)
+            else:
+                existe_trajectoria(G, u, neighbor, k, nodos_rand_unicos, contador)
+                return True
+
+            if (
+                existe_trajectoria(G, neighbor, v, k, nodos_rand_unicos, contador)
+                and contador < k
+            ):
+
+                return True
 
 
 if __name__ == "__main__":
@@ -58,24 +87,24 @@ if __name__ == "__main__":
     nodos_rand = agarrar_nodos_al_azar(G.number_of_nodes())
     nodos_rand_unicos = eliminar_duplicados(nodos_rand)
     # /////////////////////////////////////////////////////////
-    # print(
-    #     "Seleccione 2 nodos uv, ademas un entero positivo k el cual indique el peso de la trayectoria"
-    # )
-    # u = int(input("Ingrese en nodo u:"))
-    # v = int(input("Ingrese en nodo v:"))
-    # k = input("Ingrese el entero positivo k:")
+    print(
+        "Seleccione 2 nodos uv, ademas un entero positivo k el cual indique el peso de la trayectoria"
+    )
+    u = str(input("Ingrese en nodo u:"))
+    v = str(input("Ingrese en nodo v:"))
+    k = input("Ingrese el entero positivo k:")
 
-    if 7 in nodos_rand_unicos:
-        nodos_rand_unicos.remove(7)
-    if 3 in nodos_rand_unicos:
-        nodos_rand_unicos.remove(3)
+    if u in nodos_rand_unicos:
+        nodos_rand_unicos.remove(u)
+    if v in nodos_rand_unicos:
+        nodos_rand_unicos.remove(v)
 
-    # print("antes: " + str(nodos_rand_unicos))
+    print(str(nodos_rand_unicos))
     # ///////////////////////////////////////////////////////// Fase de verificación
-    if existe_trajectoria(G, "7", "3", 8, [6, 4, 5, 2], 0):
-        print("Existe una trayectoria de u a v con peso menor a " + str(8))
+    if existe_trajectoria(G, u, v, 8, nodos_rand_unicos, 0):
+        print("Existe una trayectoria de u a v con peso menor a " + str(k))
     else:
-        print("No existe una trayectoria de u a v con peso menor a" + str(8))
+        print("No existe una trayectoria de u a v con peso menor a " + str(k))
     # /////////////////////////////////////////////////////////
 
     # Dibujamos la grafica
