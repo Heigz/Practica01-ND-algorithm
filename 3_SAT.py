@@ -74,7 +74,7 @@ def contador(expresion):
 
 def separar_expresion(expresion):
     """Separa la expresión 3-SAT en cláusulas"""
-    pattern = "\([^()]+\)"
+    pattern = r"\([^()]+\)"
     matches = re.findall(pattern, expresion)
     return matches
 
